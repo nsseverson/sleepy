@@ -240,7 +240,7 @@
     [self updateLabelsForSleepSessionStart];
     [self writeCurrentSleepSessionToFile];
     
-    [self prepareMenuIconsForUserAsleepInSleepSession];
+    [self prepareMenuIconsForUserAsleepAfterTwoHoursInSleepSession];
 }
 
 - (IBAction)sleepWasDeferredByUserMenuButton {
@@ -459,6 +459,13 @@
     [self addMenuItemWithItemIcon:WKMenuItemIconBlock title:@"Cancel" action:@selector(sleepWasCancelledByUserMenuButton)];
     [self addMenuItemWithImageNamed:@"wakeMenuIcon" title:@"Wake" action:@selector(userAwokeByUserMenuButton)];
     [self addMenuItemWithImageNamed:@"stillAwakeMenuIcon" title:@"Still Awake?" action:@selector(sleepWasDeferredByUserMenuButton)];
+}
+
+- (void)prepareMenuIconsForUserAsleepAfterTwoHoursInSleepSession {
+    [self clearAllMenuItems];
+    [self addMenuItemWithItemIcon:WKMenuItemIconAccept title:@"End" action:@selector(sleepDidStopMenuButton)];
+    [self addMenuItemWithItemIcon:WKMenuItemIconBlock title:@"Cancel" action:@selector(sleepWasCancelledByUserMenuButton)];
+    [self addMenuItemWithImageNamed:@"wakeMenuIcon" title:@"Wake" action:@selector(userAwokeByUserMenuButton)];
 }
 
 -(void)prepareMenuIconsForUserAwakeInSleepSession {
