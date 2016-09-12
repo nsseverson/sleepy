@@ -240,7 +240,14 @@
     [self updateLabelsForSleepSessionStart];
     [self writeCurrentSleepSessionToFile];
     
-    [self prepareMenuIconsForUserAsleepAfterTwoHoursInSleepSession];
+    [self prepareMenuIconsForUserAsleepInSleepSession];
+    
+    [NSTimer scheduledTimerWithTimeInterval:15.0
+                                     target:self
+                                   selector:@selector(prepareMenuIconsForUserAsleepAfterTwoHoursInSleepSession)
+                                   userInfo:nil
+                                    repeats:NO];
+    
 }
 
 - (IBAction)sleepWasDeferredByUserMenuButton {
