@@ -33,6 +33,8 @@
 
 @property (nonatomic, retain) WCSession *connectedSession;
 
+@property (nonatomic, retain) NSTimer *twoHourTimer;
+
 // INTERFACE ITEMS //
 
 // Images
@@ -242,7 +244,7 @@
     
     [self prepareMenuIconsForUserAsleepInSleepSession];
     
-    [NSTimer scheduledTimerWithTimeInterval:15.0
+    self.twoHourTimer = [NSTimer scheduledTimerWithTimeInterval:15.0
                                      target:self
                                    selector:@selector(prepareMenuIconsForUserAsleepAfterTwoHoursInSleepSession)
                                    userInfo:nil
@@ -462,10 +464,17 @@
 
 - (void)prepareMenuIconsForUserAsleepInSleepSession {
     [self clearAllMenuItems];
-    [self addMenuItemWithItemIcon:WKMenuItemIconAccept title:@"End" action:@selector(sleepDidStopMenuButton)];
+    // [self addMenuItemWithItemIcon:WKMenuItemIconAccept title:@"End" action:@selector(sleepDidStopMenuButton)];
     [self addMenuItemWithItemIcon:WKMenuItemIconBlock title:@"Cancel" action:@selector(sleepWasCancelledByUserMenuButton)];
+    // Debug
+    [self addMenuItemWithItemIcon:WKMenuItemIconBlock title:@"StopT" action:@selector(cancelTimer)];
     [self addMenuItemWithImageNamed:@"wakeMenuIcon" title:@"Wake" action:@selector(userAwokeByUserMenuButton)];
     [self addMenuItemWithImageNamed:@"stillAwakeMenuIcon" title:@"Still Awake?" action:@selector(sleepWasDeferredByUserMenuButton)];
+}
+
+// Debug
+- (void)cancelTimer {
+    [self.twoHourTimer invalidate];
 }
 
 - (void)prepareMenuIconsForUserAsleepAfterTwoHoursInSleepSession {
